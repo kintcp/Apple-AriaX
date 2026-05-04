@@ -105,19 +105,35 @@ jobs:
         with:
           repository: saltpi/Aria.X
           token: ${{ secrets.GH_RELEASE_TOKEN }}
-          tag_name: macos-build-${{ steps.update_build_number.outputs.build-number }}
+          tag_name: ${{ steps.update_build_number.outputs.build-version }}
           name: macOS Build ${{ steps.update_build_number.outputs.build-number }}
           make_latest: true
           body: |
-            macOS TestFlight Build ${{ steps.update_build_number.outputs.build-number }}
-            
-            Build artifacts:
-            - AriaX.pkg (TestFlight package)
-            - AriaX.dmg (Direct installation)
-            
-            **Installation Options:**
-            1. Use the .pkg file for TestFlight distribution
-            2. Use the .dmg file for direct installation
+            ### 更新内容
+            * <TODO>
+            ### Homebrew
+            ```bash
+            brew install saltpi/tap/ariax
+            ```
+            ### 商店
+            苹果商店: https://apps.apple.com/app/aria2x/id6763280346
+            微软商店: https://apps.microsoft.com/store/detail/9P8H0PT2L04Z?cid=DevShareMCLPCS
+            ### 浏览器插件
+            Chrome: https://chromewebstore.google.com/detail/omghpcodjaaildpfennpiakncphlgddk?utm_source=item-share-cb
+            Firefox: https://addons.mozilla.org/en-US/firefox/addon/ariax/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search
+            ---
+            ### Update Log
+            * <TODO>
+            ### Homebrew
+            ```bash
+            brew install saltpi/tap/ariax
+            ```
+            ### Store
+            Apple Store: https://apps.apple.com/app/aria2x/id6763280346
+            Microsoft Store: https://apps.microsoft.com/store/detail/9P8H0PT2
+            ### Browser Extensions
+            Chrome: https://chromewebstore.google.com/detail/omghpcodjaaild
+            Firefox: https://addons.mozilla.org/en-US/firefox/addon/ariax/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search
           files: |
             AriaX/.build/Artifacts/AriaX.pkg
             AriaX/.build/Artifacts/AriaX.dmg
