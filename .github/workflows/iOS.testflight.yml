@@ -17,7 +17,7 @@ jobs:
       - name: 🛠️ Checkout repository
         uses: actions/checkout@v4
         with:
-            repository: saltpi/iPlay.Apple
+            repository: saltpi/AriaX
             ref: 'develop'
             token: ${{ secrets.REPO_TOKEN }}
             submodules: recursive
@@ -32,7 +32,7 @@ jobs:
       - name: 📄 Download provisioning profiles
         uses: apple-actions/download-provisioning-profiles@v4
         with:
-          bundle-id: top.ourfor.app.iPlayClient
+          bundle-id: cn.saltpi.app.AriaX
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
@@ -40,32 +40,17 @@ jobs:
       - name: 📄 Download provisioning profiles
         uses: apple-actions/download-provisioning-profiles@v4
         with:
-          bundle-id: top.ourfor.app.iPlayClient.Clip
+          bundle-id: cn.saltpi.app.AriaX.Extension
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
-      - name: 📄 Download provisioning profiles
-        uses: apple-actions/download-provisioning-profiles@v4
-        with:
-          bundle-id: top.ourfor.app.iPlayClient.Safari
-          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-          
-      - name: 📄 Download provisioning profiles
-        uses: apple-actions/download-provisioning-profiles@v4
-        with:
-          bundle-id: top.ourfor.app.iPlayClient.Message
-          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - name: 🔢 Update Build Number
         id: update_build_number
         uses: saltpi/update-testflight-build-number@v5
         with:
-          app-id: '6480576133'
+          app-id: '6763280346'
           platform: 'IOS'
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
@@ -95,7 +80,7 @@ jobs:
       - name: ☁️ Upload to TestFlight
         uses: apple-actions/upload-testflight-build@v3
         with:
-          app-path: .build/Artifacts/iPlay/iPlay.ipa
+          app-path: .build/Artifacts/AriaX/AriaX.ipa
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
@@ -104,7 +89,7 @@ jobs:
       - name: 🏷️ Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          repository: endpne/iPlay-Release-iOS
+          repository: saltpi/AriaX
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           name: iOS Build ${{ steps.update_build_number.outputs.build-number }}
           tag_name: ios-build-${{ steps.update_build_number.outputs.build-number }}
@@ -113,9 +98,9 @@ jobs:
             iOS TestFlight Build ${{ steps.update_build_number.outputs.build-number }}
             
             Build artifacts:
-            - iPlay.ipa (TestFlight package)
+            - AriaX.ipa (TestFlight package)
             
             **Installation Options:**
             1. Use the .ipa file for TestFlight distribution
           files: |
-            .build/Artifacts/iPlay/iPlay.ipa
+            .build/Artifacts/AriaX/AriaX.ipa
