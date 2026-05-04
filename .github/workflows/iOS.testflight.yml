@@ -44,8 +44,8 @@ jobs:
 
       - name: 🧱 Install dependencies
         run: |
-          brew install --cask xcodegen
-          brew install --cask xcbeautify
+          brew install xcodegen
+          brew install xcbeautify
           xcodegen
 
       - name: 🔢 Update Build Number
