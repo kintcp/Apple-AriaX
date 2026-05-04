@@ -61,7 +61,7 @@ jobs:
 
       - name: 🔢 Update Build Number
         id: update_build_number
-        uses: saltpi/update-testflight-build-number@v5
+        uses: saltpi/update-testflight-build-number@v6
         with:
           app-id: '6763280346'
           platform: 'MAC_OS'
