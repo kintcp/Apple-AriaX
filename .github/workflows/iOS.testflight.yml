@@ -46,6 +46,7 @@ jobs:
         run: |
           brew install xcodegen
           brew install xcbeautify
+          ls
           xcodegen
 
       - name: 🔢 Update Build Number
@@ -61,7 +62,7 @@ jobs:
       - name: 🧾 Print Build Number
         run: |
           echo "Build Number: ${{ steps.update_build_number.outputs.build-number }}"
-          cat iPlay.xcodeproj/project.pbxproj | grep -A 1 'CURRENT_PROJECT_VERSION = '
+          cat AriaX.xcodeproj/project.pbxproj | grep -A 1 'CURRENT_PROJECT_VERSION = '
 
       - name: ⏰ SPM cache
         uses: actions/cache@v4
