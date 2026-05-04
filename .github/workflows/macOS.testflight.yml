@@ -57,6 +57,7 @@ jobs:
           brew install xcbeautify
           ls
           xcodegen
+        working-directory: AriaX
 
       - name: 🔢 Update Build Number
         id: update_build_number
@@ -72,17 +73,19 @@ jobs:
         run: |
           echo "Build Number: ${{ steps.update_build_number.outputs.build-number }}"
           cat AriaX.xcodeproj/project.pbxproj | grep -A 1 'CURRENT_PROJECT_VERSION = '
+        working-directory: AriaX
 
       - name: ⏰ SPM cache
         uses: actions/cache@v4
         with:
-          path: .build
+          path: AriaX/.build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-macOS
           
       - name: 🚀 Build app
         shell: bash
+        working-directory: AriaX
         run: |
           # git apply script/macos/*.patch --allow-empty
           next_build_number=$((${{ steps.update_build_number.outputs.build-number }} + 1))
@@ -93,31 +96,11 @@ jobs:
       - name: ☁️ Upload to TestFlight
         uses: apple-actions/upload-testflight-build@v3
         with:
-          app-path: .build/Artifacts/AriaX.pkg
+          app-path: AriaX/.build/Artifacts/AriaX.pkg
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
-      # - name: ☁️ Upload to Onedrive
-      #   run: |
-      #     version_code="$(git rev-list --count HEAD)"
-      #     buildtime=$(date '+%Y%m%d.%H%M')
-      #     wget https://drive.ourfor.top/tools/upload_session.py -O upload.py
-      #     python -m pip install requests tqdm
-      #     python upload.py --url "https://drive.ourfor.top/od_bot/build/iPlay/macOS/iPlay_build_${version_code}.pkg" \
-      #       --file "$PWD/.build/Artifacts/iPlay.pkg" \
-      #       --token "${{ secrets.ONEDRIVE_CLIENT_ID }}"
-      #     python upload.py --url "https://drive.ourfor.top/od_bot/build/iPlay/macOS/iPlay_build_${version_code}.dmg" \
-      #       --file "$PWD/.build/Artifacts/iPlay.dmg" \
-      #       --token "${{ secrets.ONEDRIVE_CLIENT_ID }}"
-      #     echo "https://drive.ourfor.top/od_bot/build/iPlay/macOS/iPlay_build_${version_code}.dmg" > "$PWD/.build/Artifacts/latest.dmg.url"
-      #     python upload.py --url "https://drive.ourfor.top/od_bot/build/iPlay/macOS/latest.dmg.url" \
-      #       --file "$PWD/.build/Artifacts/latest.dmg.url" \
-      #       --token "${{ secrets.ONEDRIVE_CLIENT_ID }}"
-      #     python upload.py --url "https://drive.ourfor.top/od_kiss/iplay/appcast.xml" \
-      #       --file "$PWD/.build/Artifacts/appcast.xml" \
-      #       --token "${{ secrets.ONEDRIVE_CLIENT_ID }}"
-      #   shell: bash
       - name: 🏷️ Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -137,6 +120,6 @@ jobs:
             1. Use the .pkg file for TestFlight distribution
             2. Use the .dmg file for direct installation
           files: |
-            .build/Artifacts/AriaX.pkg
-            .build/Artifacts/AriaX.dmg
-            .build/Artifacts/appcast.xml
+            AriaX/.build/Artifacts/AriaX.pkg
+            AriaX/.build/Artifacts/AriaX.dmg
+            AriaX/.build/Artifacts/appcast.xml

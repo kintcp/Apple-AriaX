@@ -43,6 +43,7 @@ jobs:
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - name: 🧱 Install dependencies
+        working-directory: AriaX
         run: |
           brew install xcodegen
           brew install xcbeautify
@@ -60,6 +61,7 @@ jobs:
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - name: 🧾 Print Build Number
+        working-directory: AriaX
         run: |
           echo "Build Number: ${{ steps.update_build_number.outputs.build-number }}"
           cat AriaX.xcodeproj/project.pbxproj | grep -A 1 'CURRENT_PROJECT_VERSION = '
@@ -67,13 +69,14 @@ jobs:
       - name: ⏰ SPM cache
         uses: actions/cache@v4
         with:
-          path: .build
+          path: AriaX/.build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-iOS
           
       - name: 🚀 Build app
         shell: bash
+        working-directory: AriaX
         run: |
           # git apply script/ios/*.patch --allow-empty
           next_build_number=$((${{ steps.update_build_number.outputs.build-number }} + 1))
@@ -83,7 +86,7 @@ jobs:
       - name: ☁️ Upload to TestFlight
         uses: apple-actions/upload-testflight-build@v3
         with:
-          app-path: .build/Artifacts/AriaX/AriaX.ipa
+          app-path: AriaX/.build/Artifacts/AriaX/AriaX.ipa
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
@@ -106,4 +109,4 @@ jobs:
             **Installation Options:**
             1. Use the .ipa file for TestFlight distribution
           files: |
-            .build/Artifacts/AriaX/AriaX.ipa
+            AriaX/.build/Artifacts/AriaX/AriaX.ipa
