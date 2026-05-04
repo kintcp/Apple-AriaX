@@ -95,7 +95,7 @@ jobs:
       - name: 🏷️ Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          repository: saltpi/AriaX
+          repository: saltpi/Aria.X
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           name: iOS Build ${{ steps.update_build_number.outputs.build-number }}
           tag_name: ios-build-${{ steps.update_build_number.outputs.build-number }}
