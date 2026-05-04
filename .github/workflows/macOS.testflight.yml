@@ -121,7 +121,9 @@ jobs:
             ### 浏览器插件
             Chrome: https://chromewebstore.google.com/detail/omghpcodjaaildpfennpiakncphlgddk?utm_source=item-share-cb
             Firefox: https://addons.mozilla.org/en-US/firefox/addon/ariax/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search
+
             ---
+            
             ### Update Log
             * <TODO>
             ### Homebrew
