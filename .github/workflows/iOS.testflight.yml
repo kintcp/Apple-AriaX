@@ -99,7 +99,7 @@ jobs:
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           name: iOS Build ${{ steps.update_build_number.outputs.build-number }}
           tag_name: ios-build-${{ steps.update_build_number.outputs.build-number }}
-          make_latest: true
+          make_latest: false
           body: |
             iOS TestFlight Build ${{ steps.update_build_number.outputs.build-number }}
             
