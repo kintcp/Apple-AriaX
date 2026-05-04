@@ -5,10 +5,7 @@ on:
       ref:
         description: "Name of the branch"
         required: false
-        default: ""
-
-permissions:
-  contents: write  
+        default: "" 
 
 jobs:
   build-and-release:
